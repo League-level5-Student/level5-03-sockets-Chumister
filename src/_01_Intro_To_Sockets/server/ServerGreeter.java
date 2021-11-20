@@ -1,24 +1,47 @@
 package _01_Intro_To_Sockets.server;
 
 import java.net.*;
+
+import javax.swing.JOptionPane;
+
 import java.io.*;
 
 public class ServerGreeter extends Thread {
 	//1. Create an object of the ServerSocket class
-
+		ServerSocket socket;
 	public ServerGreeter() throws IOException {
 		//2. Initialize the ServerSocket object. In the parameters,
 		//   you must define the port at which the server will listen for connections.
-		
+		socket = new ServerSocket(9090);
 		//*OPTIONAL* you can set a time limit for the server to wait by using the 
 		//  ServerSocket's setSoTimeout(int timeInMilliSeconds) method
 	}
-
+		boolean boo = true;
 	public void run() {
 		//3. Create a boolean variable and initialize it to true.
 		
 		//4. Make a while loop that continues looping as long as the boolean created in the previous step is true.
-			
+			while (boo) {
+				try {
+					JOptionPane.showMessageDialog(null, "The server is waiting for a client to connect...");
+					Socket sock = socket.accept();
+					JOptionPane.showMessageDialog(null, "The client has connected");
+					DataInputStream in = new DataInputStream(sock.getInputStream());
+					System.out.println(in.readUTF());
+					DataOutputStream out = new DataOutputStream(sock.getOutputStream());
+					out.writeUTF("Message: ");
+					sock.close();
+				} catch (SocketTimeoutException ste) {
+					// TODO: handle exception
+					JOptionPane.showMessageDialog(null, "SocketTimeoutException ste");
+					boo = false;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "IOException ioe");
+					e.printStackTrace();
+				}
+				
+			}
 			//5. Make a try-catch block that checks for two types Exceptions: SocketTimeoutException and IOException.
 			//   Put steps 8 - 15 in the try block.
 		
@@ -49,6 +72,15 @@ public class ServerGreeter extends Thread {
 
 	public static void main(String[] args) {
 		//16. In a new thread, create an object of the ServerGreeter class and start the thread. Don't forget the try-catch.
-		
+		ServerGreeter greet = null;
+		try {
+			greet = new ServerGreeter();
+			
+		}catch (IOException e1) {
+			// TODO: handle exception
+			e1.printStackTrace();
+			
+		}
+		greet.start();
 	}
 }
