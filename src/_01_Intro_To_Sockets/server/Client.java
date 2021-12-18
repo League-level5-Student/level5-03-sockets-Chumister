@@ -52,7 +52,7 @@ public class Client {
 	public void sendMessage() {
 		try {
 			if (os != null) {
-				os.writeObject(ChatApp.message());
+				os.writeObject(ChatApp.getMessage());
 				os.flush();
 			}
 		} catch (IOException e) {
