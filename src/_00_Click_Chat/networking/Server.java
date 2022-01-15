@@ -30,12 +30,14 @@ public class Server {
 
 			connection = server.accept();
 
+			
 			os = new ObjectOutputStream(connection.getOutputStream());
 			is = new ObjectInputStream(connection.getInputStream());
 
 			os.flush();
 
 			while (connection.isConnected()) {
+				
 				try {
 					JOptionPane.showMessageDialog(null, is.readObject());
 					System.out.println(is.readObject());
@@ -72,6 +74,15 @@ public class Server {
 			e.printStackTrace();
 		}
 	}
-
 	
+	public void sendMessage(String clientInput){
+		try{
+			if(os != null){
+				os.writeObject(clientInput);
+				os.flush();
+			}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
 }

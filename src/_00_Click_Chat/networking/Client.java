@@ -3,6 +3,7 @@ package _00_Click_Chat.networking;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -59,4 +60,18 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public void sendMessage(String clientInput){
+		try{
+			if(os != null){
+				os.writeObject(clientInput);
+				os.flush();
+			}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+
+
 }

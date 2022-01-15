@@ -23,12 +23,18 @@ public class ServerGreeter extends Thread {
 
 		//4. Make a while loop that continues looping as long as the boolean created in the previous step is true.
 			while (boo) {
+				
+			//5. Make a try-catch block that checks for two types Exceptions: SocketTimeoutException and IOException.
+			//   Put steps 8 - 15 in the try block.
 				try {
 					JOptionPane.showMessageDialog(null, "The server is waiting for a client to connect...");
 					Socket sock = socket.accept();
-					
+					DataInputStream district = new DataInputStream(sock.getInputStream());
+					district.readUTF();
+					DataOutputStream dostro = new DataOutputStream(sock.getOutputStream());					// TODO: handle exception
+					dostro.writeUTF("Working!");
+					socket.close();
 				} catch (SocketTimeoutException ste) {
-					// TODO: handle exception
 					System.out.println("System Timeout!");
 					boo = false;
 				} catch (IOException e) {
@@ -38,9 +44,6 @@ public class ServerGreeter extends Thread {
 				}
 				
 			}
-			//5. Make a try-catch block that checks for two types Exceptions: SocketTimeoutException and IOException.
-			//   Put steps 8 - 15 in the try block.
-		
 				//8. Let the user know that the server is waiting for a client to connect.
 		
 				//9. Create an object of the Socket class and initialize it to serverSocket.accept();
@@ -68,6 +71,14 @@ public class ServerGreeter extends Thread {
 
 	public static void main(String[] args) {
 		//16. In a new thread, create an object of the ServerGreeter class and start the thread. Don't forget the try-catch.
-		
+		Thread thr = new Thread(()->{
+		try {
+			ServerGreeter greet = new ServerGreeter();
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		});
+		thr.start();
 	}
 }
