@@ -31,11 +31,11 @@ public static void main(String[] args) {
 			JOptionPane.showMessageDialog(null, "Server started at: " + server.getIPAddress() + "\nPort: " + server.getPort());
 			if(messageSent == false){
 				severInput = JOptionPane.showInputDialog("Send a message:");
-				server.sendMess(severInput);
+				server.sendMessage(severInput);
 				messageSent = true;
 			}else{
 				severInput = JOptionPane.showInputDialog(clientInput);
-				server.sendMess(severInput);
+				server.sendMessage(severInput);
 				messageSent = true;
 			}
 			
